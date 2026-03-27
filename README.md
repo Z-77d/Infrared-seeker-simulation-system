@@ -11,9 +11,4 @@ This system simulates the infrared imaging process through four major stages:
 3. **Optical Projection Model**
 4. **Aero-Optical Effects**
 
-## Architecture
 
-```text
-① Radiative Transfer   →   ② Detector Response   →   ③ Optical Projection   →   ④ Aero-Optical Effects
-   Planck Law               Noise Chain                Pinhole + PSF             Turbulence Phase Screen
-   Atmospheric Loss         ADC Quantization           Image Rendering            LOS Jitter
