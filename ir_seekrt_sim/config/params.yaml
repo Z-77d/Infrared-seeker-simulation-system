@@ -1,96 +1,97 @@
 # ============================================================
-#  红外导引头仿真系统 - 参数配置文件
+#  Infrared Seeker Simulation System - Parameter Configuration File
 # ============================================================
 
-# ------ 目标参数 ------
+# ------ Target Parameters ------
 target:
-  temperature: 500.0          # 目标温度 [K]
-  emissivity: 0.90            # 发射率 (0~1)
-  area: 1.0                   # 目标面积 [m²]
-  distance: 5000.0            # 目标距离 [m]
-  position_3d: [0.0, 0.0, 5000.0]   # 世界坐标系位置 [m]
+  temperature: 500.0          # Target temperature [K]
+  emissivity: 0.90            # Emissivity (0~1)
+  area: 1.0                   # Target area [m²]
+  distance: 5000.0            # Target distance [m]
+  position_3d: [0.0, 0.0, 5000.0]   # Position in world coordinates [m]
 
-# ------ 波段参数 ------
+# ------ Spectral Band Parameters ------
 band:
-  # 可选: "MWIR" (中波 3-5um) 或 "LWIR" (长波 8-12um)
+  # Options: "MWIR" (mid-wave 3-5 um) or "LWIR" (long-wave 8-12 um)
   name: "MWIR"
-  lambda_min: 3.0e-6          # 最小波长 [m]
-  lambda_max: 5.0e-6          # 最大波长 [m]
-  n_samples: 500              # 波长积分采样点数
+  lambda_min: 3.0e-6          # Minimum wavelength [m]
+  lambda_max: 5.0e-6          # Maximum wavelength [m]
+  n_samples: 500              # Number of samples for wavelength integration
 
-# ------ 大气传输参数 ------
+# ------ Atmospheric Transmission Parameters ------
 atmosphere:
   model: "exponential"        # "exponential" | "lowtran" | "custom"
-  transmittance: 0.75         # 整体大气透过率 (0~1)
-  absorption_coeff: 2.0e-5    # 指数模型吸收系数 [1/m]
-  # 气溶胶散射 (Mie散射近似)
-  aerosol_visibility: 23.0    # 能见度 [km]
-  humidity: 0.5               # 相对湿度 (0~1)
+  transmittance: 0.75         # Overall atmospheric transmittance (0~1)
+  absorption_coeff: 2.0e-5    # Absorption coefficient for exponential model [1/m]
+  # Aerosol scattering (Mie scattering approximation)
+  aerosol_visibility: 23.0    # Visibility [km]
+  humidity: 0.5               # Relative humidity (0~1)
 
-# ------ 光学系统参数 ------
+# ------ Optical System Parameters ------
 optics:
-  focal_length: 0.1           # 焦距 [m]
-  aperture_diameter: 0.05     # 口径 [m]
-  f_number: 2.0               # F数 = focal_length / aperture_diameter
-  transmission: 0.85          # 光学系统透过率
-  # 点扩散函数
+  focal_length: 0.1           # Focal length [m]
+  aperture_diameter: 0.05     # Aperture diameter [m]
+  f_number: 2.0               # F-number = focal_length / aperture_diameter
+  transmission: 0.85          # Optical system transmittance
+  # Point spread function
   psf_model: "gaussian"       # "gaussian" | "airy" | "custom"
-  psf_sigma_pixels: 1.2       # 高斯PSF σ (像素)
+  psf_sigma_pixels: 1.2       # Gaussian PSF sigma (pixels)
 
-# ------ 探测器参数 ------
+# ------ Detector Parameters ------
 detector:
-  # 阵列规格
+  # Array specification
   array_rows: 320
   array_cols: 240
-  pixel_pitch: 30.0e-6        # 像元尺寸 [m] (30 μm)
-  # 响应特性
-  quantum_efficiency: 0.75    # 量子效率
-  responsivity: 2.0           # 响应率 [A/W]
-  integration_time: 1.0e-3    # 积分时间 [s]
-  # 噪声参数
-  read_noise_electrons: 50.0  # 读出噪声 [e-]
-  dark_current: 1.0e+4        # 暗电流 [e-/s]
-  full_well_capacity: 1.0e+7  # 满阱容量 [e-]
+  pixel_pitch: 30.0e-6        # Pixel pitch [m] (30 μm)
+  # Response characteristics
+  quantum_efficiency: 0.75    # Quantum efficiency
+  responsivity: 2.0           # Responsivity [A/W]
+  integration_time: 1.0e-3    # Integration time [s]
+  # Noise parameters
+  read_noise_electrons: 50.0  # Readout noise [e-]
+  dark_current: 1.0e+4        # Dark current [e-/s]
+  full_well_capacity: 1.0e+7  # Full well capacity [e-]
   # ADC
-  adc_bits: 14                # ADC位深
-  # 非均匀性
-  fpn_sigma: 0.01             # 固定模式噪声 σ (相对值)
-  # NETD (噪声等效温差) 验证指标
-  netd_target: 0.05           # 目标NETD [K]
+  adc_bits: 14                # ADC bit depth
+  # Non-uniformity
+  fpn_sigma: 0.01             # Fixed pattern noise sigma (relative value)
+  # NETD validation metric
+  netd_target: 0.05           # Target NETD [K]
 
-# ------ 背景参数 ------
+# ------ Background Parameters ------
 background:
-  temperature: 290.0          # 背景温度 [K]
-  emissivity: 0.95            # 背景发射率
-  # 天空背景 (额外加成)
-  sky_radiance_fraction: 0.1  # 天空辐射占比
+  temperature: 290.0          # Background temperature [K]
+  emissivity: 0.95            # Background emissivity
+  # Sky background (additional contribution)
+  sky_radiance_fraction: 0.1  # Fraction of sky radiance contribution
 
-# ------ 气动光学效应参数 ------
+# ------ Aero-Optical Effect Parameters ------
 aero_optics:
   enable: true
-  # 湍流强度
-  Cn2: 1.0e-14                # 折射率结构常数 [m^(-2/3)]
-  path_length: 100.0          # 气动湍流路径长度 [m]
-  # von Kármán 湍流谱参数
-  L0: 10.0                    # 外尺度 [m]
-  l0: 0.01                    # 内尺度 [m]
-  # 图像抖动
-  jitter_sigma_pixels: 0.5    # 图像整体抖动 σ [像素]
-  n_phase_screens: 5          # 相位屏数量
-  # 流场速度 (影响抖动频率)
-  flow_velocity: 300.0        # 流速 [m/s]
+  # Turbulence strength
+  Cn2: 1.0e-14                # Refractive index structure constant [m^(-2/3)]
+  path_length: 100.0          # Aero-optical turbulence path length [m]
+  # von Kármán turbulence spectrum parameters
+  L0: 10.0                    # Outer scale [m]
+  l0: 0.01                    # Inner scale [m]
+  # Image jitter
+  jitter_sigma_pixels: 0.5    # Global image jitter sigma [pixels]
+  n_phase_screens: 5          # Number of phase screens
+  # Flow velocity (affects jitter frequency)
+  flow_velocity: 300.0        # Flow velocity [m/s]
 
-## ------ 仿真控制 ------
+## ------ Simulation Control ------
 #simulation:
 #  random_seed: 42
 #  output_dir: "output"
-#  save_intermediate: true     # 保存中间结果
+#  save_intermediate: true     # Save intermediate results
 #  output_format: "tiff"       # "tiff" | "png" | "npy"
-#  n_frames: 20                # 仿真帧数
-# ------ 仿真控制 ------
+#  n_frames: 20                # Number of simulation frames
+
+# ------ Simulation Control ------
 simulation:
   random_seed: 42
   output_dir: "output"
-  save_intermediate: false    # 跑大量帧时建议关掉中间过程图，节省空间
-  output_format: "png"        # 生成视频建议用 png，方便预览
-  n_frames: 100               # 改为 100 帧，模拟 5 秒的逼近过程
+  save_intermediate: false    # Recommended to disable intermediate result saving when running many frames to save disk space
+  output_format: "png"        # Use PNG for video generation for easier preview
+  n_frames: 100               # Increased to 100 frames to simulate a 5-second approach process
