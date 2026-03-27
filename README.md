@@ -10,5 +10,7 @@ This system simulates the infrared imaging process through four major stages:
 2. **Detector Response Model**
 3. **Optical Projection Model**
 4. **Aero-Optical Effects**
+Installation
 
+Install the required dependencies:
 
