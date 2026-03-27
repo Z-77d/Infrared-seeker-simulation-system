@@ -1,0 +1,96 @@
+# ============================================================
+#  红外导引头仿真系统 - 参数配置文件
+# ============================================================
+
+# ------ 目标参数 ------
+target:
+  temperature: 500.0          # 目标温度 [K]
+  emissivity: 0.90            # 发射率 (0~1)
+  area: 1.0                   # 目标面积 [m²]
+  distance: 5000.0            # 目标距离 [m]
+  position_3d: [0.0, 0.0, 5000.0]   # 世界坐标系位置 [m]
+
+# ------ 波段参数 ------
+band:
+  # 可选: "MWIR" (中波 3-5um) 或 "LWIR" (长波 8-12um)
+  name: "MWIR"
+  lambda_min: 3.0e-6          # 最小波长 [m]
+  lambda_max: 5.0e-6          # 最大波长 [m]
+  n_samples: 500              # 波长积分采样点数
+
+# ------ 大气传输参数 ------
+atmosphere:
+  model: "exponential"        # "exponential" | "lowtran" | "custom"
+  transmittance: 0.75         # 整体大气透过率 (0~1)
+  absorption_coeff: 2.0e-5    # 指数模型吸收系数 [1/m]
+  # 气溶胶散射 (Mie散射近似)
+  aerosol_visibility: 23.0    # 能见度 [km]
+  humidity: 0.5               # 相对湿度 (0~1)
+
+# ------ 光学系统参数 ------
+optics:
+  focal_length: 0.1           # 焦距 [m]
+  aperture_diameter: 0.05     # 口径 [m]
+  f_number: 2.0               # F数 = focal_length / aperture_diameter
+  transmission: 0.85          # 光学系统透过率
+  # 点扩散函数
+  psf_model: "gaussian"       # "gaussian" | "airy" | "custom"
+  psf_sigma_pixels: 1.2       # 高斯PSF σ (像素)
+
+# ------ 探测器参数 ------
+detector:
+  # 阵列规格
+  array_rows: 320
+  array_cols: 240
+  pixel_pitch: 30.0e-6        # 像元尺寸 [m] (30 μm)
+  # 响应特性
+  quantum_efficiency: 0.75    # 量子效率
+  responsivity: 2.0           # 响应率 [A/W]
+  integration_time: 1.0e-3    # 积分时间 [s]
+  # 噪声参数
+  read_noise_electrons: 50.0  # 读出噪声 [e-]
+  dark_current: 1.0e+4        # 暗电流 [e-/s]
+  full_well_capacity: 1.0e+7  # 满阱容量 [e-]
+  # ADC
+  adc_bits: 14                # ADC位深
+  # 非均匀性
+  fpn_sigma: 0.01             # 固定模式噪声 σ (相对值)
+  # NETD (噪声等效温差) 验证指标
+  netd_target: 0.05           # 目标NETD [K]
+
+# ------ 背景参数 ------
+background:
+  temperature: 290.0          # 背景温度 [K]
+  emissivity: 0.95            # 背景发射率
+  # 天空背景 (额外加成)
+  sky_radiance_fraction: 0.1  # 天空辐射占比
+
+# ------ 气动光学效应参数 ------
+aero_optics:
+  enable: true
+  # 湍流强度
+  Cn2: 1.0e-14                # 折射率结构常数 [m^(-2/3)]
+  path_length: 100.0          # 气动湍流路径长度 [m]
+  # von Kármán 湍流谱参数
+  L0: 10.0                    # 外尺度 [m]
+  l0: 0.01                    # 内尺度 [m]
+  # 图像抖动
+  jitter_sigma_pixels: 0.5    # 图像整体抖动 σ [像素]
+  n_phase_screens: 5          # 相位屏数量
+  # 流场速度 (影响抖动频率)
+  flow_velocity: 300.0        # 流速 [m/s]
+
+## ------ 仿真控制 ------
+#simulation:
+#  random_seed: 42
+#  output_dir: "output"
+#  save_intermediate: true     # 保存中间结果
+#  output_format: "tiff"       # "tiff" | "png" | "npy"
+#  n_frames: 20                # 仿真帧数
+# ------ 仿真控制 ------
+simulation:
+  random_seed: 42
+  output_dir: "output"
+  save_intermediate: false    # 跑大量帧时建议关掉中间过程图，节省空间
+  output_format: "png"        # 生成视频建议用 png，方便预览
+  n_frames: 100               # 改为 100 帧，模拟 5 秒的逼近过程
